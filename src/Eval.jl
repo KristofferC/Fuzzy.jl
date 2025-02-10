@@ -19,7 +19,7 @@ function eval_fis(fis::FISMamdani, input_values::Vector{<:AbstractFloat}, defuzz
         tmp_strengths = AbstractFloat[]
         for i in 1:length(rule.input_mf_names)
             if (rule.input_mf_names[i] !== "")
-                push!(tmp_strengths, eval(fis.input_mfs_dicts[i][rule.input_mf_names[i]], input_values[i]))
+                push!(tmp_strengths, evaluate(fis.input_mfs_dicts[i][rule.input_mf_names[i]], input_values[i]))
             end
         end
         push!(firing_strengths, firing(tmp_strengths, rule.firing_method))
@@ -46,7 +46,7 @@ function eval_fis(fis::FISSugeno, input_values::Vector{<:AbstractFloat})
         tmp_strengths = AbstractFloat[]
         for i in 1:length(rule.input_mf_names)
             if (rule.input_mf_names[i] !== "")
-                push!(tmp_strengths, eval(fis.input_mfs_dicts[i][rule.input_mf_names[i]], input_values[i]))
+                push!(tmp_strengths, evaluate(fis.input_mfs_dicts[i][rule.input_mf_names[i]], input_values[i]))
             end
         end
         push!(firing_strengths, firing(tmp_strengths, rule.firing_method))
@@ -90,7 +90,7 @@ function defuzz(firing_strengths::Vector{AbstractFloat}, rules::Vector{Rule},	ou
             push!(mean_vec, mean_at(output_mfs_dict[rules[i].output_mf], firing_strengths[i]))
         end
         sumfire = sum(firing_strengths)
-        if sumfire != 0               
+        if sumfire != 0
             (mean_vec' * firing_strengths)[1] / sum(firing_strengths)
         else
             mean_vec

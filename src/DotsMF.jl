@@ -2,7 +2,7 @@ get_dots(membership_function::MF, input_point_vector::Union{StepRange,StepRangeL
     get_dots(membership_function, collect(input_point_vector))
 
 function get_dots(membership_function::MF, input_point_vector::Vector{T}) where {T<:Number}
-    return Real.(map(x -> Fuzzy.eval(membership_function, x), input_point_vector))
+    return Real.(map(x -> Fuzzy.evaluate(membership_function, x), input_point_vector))
 end
 
 chart_prepare(sets_dict::Dict{String,N}, input_point_vector::Union{StepRange,StepRangeLen}) where {N<:MF} =
